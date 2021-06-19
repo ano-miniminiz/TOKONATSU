@@ -8,9 +8,10 @@
         <div class="text-center mt-4">
             <p>ここから一番近い海は・・・？</p>
             <div class="input-group">
-                <input id="address" type="textbox"　class="form-control" placeholder="現在地の住所/施設名">
+                <button id="result" class="btn btn-info" onclick="getMyPlace()"><i class="fa fa-street-view"></i></button>
+                <input id="address" type="text" class="form-control" placeholder="👈 Where are you now?   /   or  Any place?">
                 <span class="input-group-btn">
-                    <button id="search" class="btn btn-info" onclick="codeAddress()"><i class="fas fa-search"></i></button>
+                    <button id="search" class="btn btn-info" onclick="codeAddress()"><i class="fas fa-search"></i>
                 </span>
             </div>
         </div>
@@ -33,38 +34,65 @@
 </body>
 
 <script>
+function getMyPlace() {
+    let output = document.getElementById("result");
+        if (!navigator.geolocation){
+            output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
+            return;
+        }
+
+    function success(position) {
+        var latitude  = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var latlng = new google.maps.LatLng( latitude , longitude ) ;
+
+        var map = new google.maps.Map( document.getElementById( 'map' ) , {
+            zoom: 15 ,
+            center: latlng ,
+        } ) ;
+        new google.maps.Marker( {
+            map: map ,
+            position: latlng ,
+        } ) ;
+    };
+    
+    function error() {
+        output.innerHTML = "座標位置を取得できません";
+    };
+    navigator.geolocation.getCurrentPosition(success, error);
+}
+
 let map
 function initMap(){
-  geocoder = new google.maps.Geocoder()
+    geocoder = new google.maps.Geocoder()
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.7828, lng:-73.9653},
-    zoom: 12,
-  });
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 35.71045, lng:139.8107},
+        zoom: 12,
+    });
 
-  marker = new google.maps.Marker({
-    position:  {lat: 40.7828, lng:-73.9653},
-    map: map
-  });
+    marker = new google.maps.Marker({
+        position: {lat: 35.71045, lng:139.8107},
+        map: map,
+    });
 }
 
 let geocoder
-
 function codeAddress(){
-  let inputAddress = document.getElementById('address').value;
+    let inputAddress = document.getElementById('address').value;
 
-  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-    if (status == 'OK') {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
-    } else {
-      alert('該当する結果がありませんでした：' + status);
-    }
-  });   
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        } else {
+            alert('該当する結果がありませんでした：' + status);
+        }
+    });   
 }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
-
