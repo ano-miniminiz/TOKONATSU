@@ -8,9 +8,9 @@
         <div class="text-center mt-4">
             <p>ここから一番近い海は・・・？</p>
             <div class="input-group">
-                <input type="textbox" class="form-control" id="adress" placeholder="現在地の住所/施設名">
+                <input id="address" type="textbox"　class="form-control" placeholder="現在地の住所/施設名">
                 <span class="input-group-btn">
-                    <button type="submit" id="search" class="btn btn-info" onclick="codeAddress()"><i class="fas fa-search"></i></button>
+                    <button id="search" class="btn btn-info" onclick="codeAddress()"><i class="fas fa-search"></i></button>
                 </span>
             </div>
         </div>
@@ -34,52 +34,37 @@
 
 <script>
 let map
-let geocoder
-let loc = "(35.71045, 139.8107)"
-
-const display = document.getElementById('display')
-
 function initMap(){
-    geocoder = new google.maps.Geocoder()
+  geocoder = new google.maps.Geocoder()
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 35.71045, lng:139.8107},
-        zoom: 20,
-    });
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 40.7828, lng:-73.9653},
+    zoom: 12,
+  });
 
-    marker = new google.maps.Marker({
-        position:  {lat: 35.71045, lng:139.8107},
-        
-        map: map
-    });
+  marker = new google.maps.Marker({
+    position:  {lat: 40.7828, lng:-73.9653},
+    map: map
+  });
 }
 
+let geocoder
 
 function codeAddress(){
-    let inputAddress = document.getElementById('address').value;
+  let inputAddress = document.getElementById('address').value;
 
-    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-        if (status == 'OK') {
-            loc = results[0].geometry.location
-            map.setCenter(loc);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: loc
-            });
-            display.textContent = "(緯度, 経度):" + loc
-        } else {
-            alert('該当する結果がありませんでした：' + status);
-        }
-    });
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });   
 }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
-<script>
-loc = "" + loc
-console.log(loc)
-console.log(loc.slice(1, loc.length - 1))
-</script>
-<img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=35.71045,139.8107&fov=100&heading=80&pitch=50&key=<%= Rails.application.credentials.google_map_api_key %>" async defer></img>
 
-</div>
