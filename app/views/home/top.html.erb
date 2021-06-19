@@ -4,76 +4,74 @@
 <div class="show-map-page">
     <h1 id="title">TOKONATSU</h1>
 
-    <div id=searchbox>
-    <input id="address" type="textbox" value="Beach">
-    <input type="button" value="検索" onclick="codeAddress()">
-    </div>
+<div id=searchbox>
+<input id="address" type="textbox" value="Beach">
+<input type="button" value="検索" onclick="codeAddress()">
+</div>
 
-    <div id="display">(緯度, 経度):(35.71045, 139.8107)</div>
+<div id="display">(緯度, 経度):(35.71045, 139.8107)</div>
 
-    <div id='map'></div>
+<div id='map'></div>
 
-    <style>
-        #title, #display, #searchbox{
-            text-align: center
-        }
-        #map {
-            height: 600px;
-            margin-left: 100px;
-            margin-right: 100px;
-        }
-    </style>
+<style>
+#title, #display, #searchbox{
+    text-align: center
+}
+#map {
+    height: 600px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+</style>
 
-    <script>
-    let map
-    let geocoder
-    let loc = "(35.71045, 139.8107)"
+<script>
+let map
+let geocoder
+let loc = "(35.71045, 139.8107)"
 
-    const display = document.getElementById('display')
+const display = document.getElementById('display')
 
-    function initMap(){
-        geocoder = new google.maps.Geocoder()
+function initMap(){
+    geocoder = new google.maps.Geocoder()
 
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 35.71045, lng:139.8107},
-            zoom: 20,
-        });
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 35.71045, lng:139.8107},
+        zoom: 20,
+    });
 
-        marker = new google.maps.Marker({
-            position:  {lat: 35.71045, lng:139.8107},
+    marker = new google.maps.Marker({
+        position:  {lat: 35.71045, lng:139.8107},
         
-            map: map
-        });
-    }
+        map: map
+    });
+}
 
 
-    function codeAddress(){
-        let inputAddress = document.getElementById('address').value;
+function codeAddress(){
+    let inputAddress = document.getElementById('address').value;
 
-        geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-            if (status == 'OK') {
-                loc = results[0].geometry.location
-                map.setCenter(loc);
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: loc
-                });
-                display.textContent = "(緯度, 経度):" + loc
-            } else {
-                alert('該当する結果がありませんでした：' + status);
-            }
-        });
-    }
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+        if (status == 'OK') {
+            loc = results[0].geometry.location
+            map.setCenter(loc);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: loc
+            });
+            display.textContent = "(緯度, 経度):" + loc
+        } else {
+            alert('該当する結果がありませんでした：' + status);
+        }
+    });
+}
 
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
-
-    <script>
-        loc = "" + loc
-        console.log(loc)
-        console.log(loc.slice(1, loc.length - 1))
-    </script>
-    <img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=35.71045,139.8107&fov=100&heading=80&pitch=50&key=<%= Rails.application.credentials.google_map_api_key %>" async defer></img>
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
+<script>
+loc = "" + loc
+console.log(loc)
+console.log(loc.slice(1, loc.length - 1))
+</script>
+<img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=35.71045,139.8107&fov=100&heading=80&pitch=50&key=<%= Rails.application.credentials.google_map_api_key %>" async defer></img>
 
 </div>
