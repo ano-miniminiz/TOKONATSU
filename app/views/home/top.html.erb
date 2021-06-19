@@ -1,9 +1,10 @@
 <br>
 
+
 <h1 id="title">TOKONATSU</h1>
 
 <div id=searchbox>
-<input id="address" type="textbox" value="東京スカイツリーのてっぺん">
+<input id="address" type="textbox" value="Beach">
 <input type="button" value="検索" onclick="codeAddress()">
 </div>
 
@@ -64,10 +65,10 @@ function codeAddress(){
 }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
 <script>
 loc = "" + loc
 console.log(loc)
 console.log(loc.slice(1, loc.length - 1))
 </script>
-<img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=35.71045,139.8107&fov=100&heading=80&pitch=50&key=<%= ENV['GOOGLE_API_KEY'] %>" async defer></img>
+<img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=35.71045,139.8107&fov=100&heading=80&pitch=50&key=<%= Rails.application.credentials.google_map_api_key %>" async defer></img>
