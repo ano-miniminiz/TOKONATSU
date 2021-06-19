@@ -35,6 +35,9 @@
 
 <script>
 function getMyPlace() {
+    //#information(検索結果全体)の非表示を解除
+    document.getElementById("information").style.display ="block";
+
     let output = document.getElementById("result");
         if (!navigator.geolocation){
             output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
@@ -64,6 +67,10 @@ function getMyPlace() {
 
 let map
 function initMap(){
+    //#information(検索結果全体)を最初は非表示にしておく
+    document.getElementById("information").style.display ="none";
+
+    //以下必要ないが、動作確認のため一応残しておく
     var geocoder = new google.maps.Geocoder()
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -78,6 +85,8 @@ function initMap(){
 }
 
 function codeAddress(){
+    //#information(検索結果全体)の非表示を解除
+    document.getElementById("information").style.display ="block";
     var geocoder = new google.maps.Geocoder();
     var map = new google.maps.Map(document.getElementById("map"),{
         zoom: 12,
