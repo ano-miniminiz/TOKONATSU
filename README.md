@@ -1,4 +1,4 @@
 # README
 
-Topページ編集　→ app/views/lauouts/application.html.erb の中を編集
-stylesheets編集　→ app/assets/stylesheets/application.css の中を編集
+編集する場所がわからなくなった場合。。。。　
+discordの資料→黄色い紙のメモ　参照
