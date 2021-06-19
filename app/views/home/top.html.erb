@@ -1,28 +1,36 @@
-
-
-
-<div class="show-map-page">
-    <h1 id="title">TOKONATSU</h1>
-
-<div id=searchbox>
-<input id="address" type="textbox" value="Beach">
-<input type="button" value="検索" onclick="codeAddress()">
-</div>
-
-<div id="display">(緯度, 経度):(35.71045, 139.8107)</div>
-
-<div id='map'></div>
-
-<style>
-#title, #display, #searchbox{
-    text-align: center
-}
-#map {
-    height: 600px;
-    margin-left: 100px;
-    margin-right: 100px;
-}
-</style>
+<body>
+    <div class="wrapper">
+        <div class="text-info text-center mt-4">
+            <h1>TOKONATSU</h1>
+            <h4>トコナツ</h4>
+            <i class="fas fa-fish"></i>
+        </div>
+        <div class="text-center mt-4">
+            <p>ここから一番近い海は・・・？</p>
+            <div class="input-group">
+                <input type="textbox" class="form-control" id="adress" placeholder="現在地の住所/施設名">
+                <span class="input-group-btn">
+                    <button type="submit" id="search" class="btn btn-info" onclick="codeAddress()"><i class="fas fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+        <div id="information" class="mt-4 border border-info rounded  text-center">
+            <h3 id="sea-title" class="bg-info text-white"></h3>
+            <div class="container mt-4 mb-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="map"></div>
+                    </div>
+                    <div class="sea-img col-lg-6">
+                        <div id="sea-distance" class="sea-distance mt-2 mb-2"><i class="fas fa-map-signs"></i></div>
+                        <div id="sea-img"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+</body>
 
 <script>
 let map
