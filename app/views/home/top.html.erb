@@ -69,19 +69,6 @@ let map
 function initMap(){
     //#information(検索結果全体)を最初は非表示にしておく
     document.getElementById("information").style.display ="none";
-
-    //以下必要ないが、動作確認のため一応残しておく
-    var geocoder = new google.maps.Geocoder()
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 35.71045, lng:139.8107},
-        zoom: 12,
-    });
-
-    var marker = new google.maps.Marker({
-        position: {lat: 35.71045, lng:139.8107},
-        map: map,
-    });
 }
 
 function codeAddress(){
