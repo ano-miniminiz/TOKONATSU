@@ -26,6 +26,8 @@ body{
 }
 
 #sea-img {
-    width:280px;
-    height:210px;
+	width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
 }
